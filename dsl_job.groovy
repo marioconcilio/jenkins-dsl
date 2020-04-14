@@ -7,6 +7,7 @@ organizationFolder(name) {
         displayName('SFDX Create Scratch Orgs')
         branchSources {
             git {
+                id('123')
                 remote('git@github.com:sumup/sfdc.git')
                 credentialsId('github')
                 includes('quality')
