@@ -1,17 +1,26 @@
+import utils.*
 
 def name = 'chapter-salesforce'
 
-organizationFolder(name) {
-    displayName(name)
-    multibranchPipelineJob('sfdx-create-scratch-org') {
-        displayName('SFDX Create Scratch Orgs')
-        branchSources {
-            git {
-                id('123')
-                remote('git@github.com:sumup/sfdc.git')
-                credentialsId('github')
-                includes('quality')
-            }
-        }
+listView(name) {
+    jobs {
+        name(name)
+        regex(name+'.+')
+    }
+    columns {
+        status()
+        weather()
+        name()
+        lastSuccess()
+        lastFailure()
+        lastDuration()
+        buildButton()
     }
 }
+
+new GithubSingleBranchPipeline()
+    .viewPrefix(name)
+    .repository('sfdc')
+    .jenkinsfileLocation('Jenkinsfile.scratch-org')
+    .branch('refs/heads/quality')
+    .build(this)
