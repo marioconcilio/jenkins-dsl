@@ -1,11 +1,10 @@
 import utils.*
 
-def name = 'chapter-salesforce'
-
-listView(name) {
+def chapterName = 'chapter-salesforce'
+  
+listView(chapterName) {
     jobs {
-        name(name)
-        regex(name+'.+')
+      	regex("${chapterName}.+")
     }
     columns {
         status()
@@ -19,8 +18,15 @@ listView(name) {
 }
 
 new GithubSingleBranchPipeline()
-    .viewPrefix(name)
+    .viewPrefix(chapterName)
     .repository('sfdc')
     .jenkinsfileLocation('Jenkinsfile.scratch-org')
     .branch('refs/heads/quality')
+    .build(this)
+
+new GithubPipeline()
+    .viewPrefix('chapter')
+    .repository('salesforce')
+    .includes('master quality dev')
+    .jenkinsfileLocation('Jenkinsfile')
     .build(this)
