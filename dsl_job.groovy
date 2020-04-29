@@ -17,13 +17,6 @@ listView(chapterName) {
     }
 }
 
-new GithubSingleBranchPipeline()
-    .viewPrefix(chapterName)
-    .repository('sfdc')
-    .jenkinsfileLocation('Jenkinsfile.scratch-org')
-    .branch('refs/heads/quality')
-    .build(this)
-
 new GithubPipeline()
     .viewPrefix('chapter')
     .repository('salesforce')
